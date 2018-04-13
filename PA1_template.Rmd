@@ -15,13 +15,13 @@ output:
   
   
 ## What is mean total number of steps taken per day?
-  ```{r, results="asis"}
+  ```{r}
   TotalStepsDay <-  tapply(activity$steps, INDEX=activity$date, FUN=sum, na.rm=T)
   hist(TotalStepsDay)
   ```
   
   The median and mean total number of steps taken per day are:
-  ```{r}
+  ```{r, results="asis"}
   xt <- xtable(data.frame(Mean=mean(TotalStepsDay), Median=median(TotalStepsDay)))
   print(xt, type="html")
   ```
@@ -68,7 +68,7 @@ hist(TotalStepsDay1)
 ```
 
 The median and mean total number of steps taken per day in the new dataset are:
-```{r}
+```{r, results="asis"}
 xt1 <- xtable(data.frame(Mean=mean(TotalStepsDay1), Median=median(TotalStepsDay1)))
 print(xt1, type="html")
 ```

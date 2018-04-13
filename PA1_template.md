@@ -31,14 +31,12 @@ output:
   print(xt, type="html")
   ```
   
-  ```
-  ## <!-- html table generated in R 3.4.3 by xtable 1.8-2 package -->
-  ## <!-- Fri Apr 13 09:50:28 2018 -->
-  ## <table border=1>
-  ## <tr> <th>  </th> <th> Mean </th> <th> Median </th>  </tr>
-  ##   <tr> <td align="right"> 1 </td> <td align="right"> 9354.23 </td> <td align="right"> 10395 </td> </tr>
-  ##    </table>
-  ```
+  <!-- html table generated in R 3.4.3 by xtable 1.8-2 package -->
+  <!-- Fri Apr 13 09:53:01 2018 -->
+  <table border=1>
+  <tr> <th>  </th> <th> Mean </th> <th> Median </th>  </tr>
+    <tr> <td align="right"> 1 </td> <td align="right"> 9354.23 </td> <td align="right"> 10395 </td> </tr>
+     </table>
   
   
 ## What is the average daily activity pattern?
@@ -96,14 +94,12 @@ xt1 <- xtable(data.frame(Mean=mean(TotalStepsDay1), Median=median(TotalStepsDay1
 print(xt1, type="html")
 ```
 
-```
-## <!-- html table generated in R 3.4.3 by xtable 1.8-2 package -->
-## <!-- Fri Apr 13 09:50:29 2018 -->
-## <table border=1>
-## <tr> <th>  </th> <th> Mean </th> <th> Median </th>  </tr>
-##   <tr> <td align="right"> 1 </td> <td align="right"> 10766.19 </td> <td align="right"> 10766.19 </td> </tr>
-##    </table>
-```
+<!-- html table generated in R 3.4.3 by xtable 1.8-2 package -->
+<!-- Fri Apr 13 09:53:02 2018 -->
+<table border=1>
+<tr> <th>  </th> <th> Mean </th> <th> Median </th>  </tr>
+  <tr> <td align="right"> 1 </td> <td align="right"> 10766.19 </td> <td align="right"> 10766.19 </td> </tr>
+   </table>
 
 Verifying both histograms, we can notice a big difference between the dataset with and without missing values. In my analyse, I decided to input the mean for the intervals each missing data. As result, it's notable that the distribution of the data is more simetric than before. 
 
