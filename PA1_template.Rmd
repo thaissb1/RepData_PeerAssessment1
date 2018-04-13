@@ -16,12 +16,17 @@ output: html_document
   ```{r, results="asis"}
   TotalStepsDay <-  tapply(activity$steps, INDEX=activity$date, FUN=sum, na.rm=T)
   hist(TotalStepsDay)
+  ```
+  
+  The median and mean total number of steps taken per day are:
+  ```{r}
   xt <- xtable(data.frame(Mean=mean(TotalStepsDay), Median=median(TotalStepsDay)))
   print(xt, type="html")
   ```
   
   
 ## What is the average daily activity pattern?
+
 1. Make a time series plot (i.e. 𝚝𝚢𝚙𝚎 = "𝚕") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
 ```{r}
@@ -32,22 +37,36 @@ plot(date.tot, TotalStepsDay, type="l")
 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 ```{r}
   TotalStepsInt <- tapply(activity$steps, INDEX=activity$interval, FUN=mean, na.rm=T, simplify = T)
-  sort(TotalStepsInt, decreasing = T)[1]
+  maxsteps <- sort(TotalStepsInt, decreasing = T)[1]
 ```
+
+The maximum number of steps is `maxsteps` in the `row.name(maxsteps)` interval.
+
 
 ## Imputing missing values
 1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with 𝙽𝙰s)
+
 ```{r}
 total.na <- sum(is.na(activity))
 ```
 
+The total number of missing values in the dataset is `total.na`.
+
+
 2. Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
+
 ```{r}
 activity1 <- activity
+##replacing the missing values in the new dataset with the mean of steps for each interval
 activity1$steps <- replace(activity1$steps, is.na(activity1$steps), tapply(activity1$steps, INDEX=activity1$interval, FUN=mean, na.rm=T))
 
+##calculanting the new total of steps per day for the new dataset
 TotalStepsDay1 <-  tapply(activity1$steps, INDEX=activity1$date, FUN=sum, na.rm=T) 
 hist(TotalStepsDay1)
+```
+
+The median and mean total number of steps taken per day in the new dataset are:
+```{r}
 xt1 <- xtable(data.frame(Mean=mean(TotalStepsDay1), Median=median(TotalStepsDay1)))
 print(xt1, type="html")
 ```
