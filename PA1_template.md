@@ -24,20 +24,25 @@ output:
   
   ![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
   
+  The median and mean total number of steps taken per day are:
+  
   ```r
   xt <- xtable(data.frame(Mean=mean(TotalStepsDay), Median=median(TotalStepsDay)))
   print(xt, type="html")
   ```
   
-  <!-- html table generated in R 3.4.3 by xtable 1.8-2 package -->
-  <!-- Thu Apr 12 22:49:43 2018 -->
-  <table border=1>
-  <tr> <th>  </th> <th> Mean </th> <th> Median </th>  </tr>
-    <tr> <td align="right"> 1 </td> <td align="right"> 9354.23 </td> <td align="right"> 10395 </td> </tr>
-     </table>
+  ```
+  ## <!-- html table generated in R 3.4.3 by xtable 1.8-2 package -->
+  ## <!-- Fri Apr 13 09:50:28 2018 -->
+  ## <table border=1>
+  ## <tr> <th>  </th> <th> Mean </th> <th> Median </th>  </tr>
+  ##   <tr> <td align="right"> 1 </td> <td align="right"> 9354.23 </td> <td align="right"> 10395 </td> </tr>
+  ##    </table>
+  ```
   
   
 ## What is the average daily activity pattern?
+
 1. Make a time series plot (i.e. 𝚝𝚢𝚙𝚎 = "𝚕") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
 
@@ -46,38 +51,45 @@ date.tot <- as.Date(row.names(TotalStepsDay), format="%Y-%m-%d")
 plot(date.tot, TotalStepsDay, type="l")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
 ```r
   TotalStepsInt <- tapply(activity$steps, INDEX=activity$interval, FUN=mean, na.rm=T, simplify = T)
-  sort(TotalStepsInt, decreasing = T)[1]
+  maxsteps <- sort(TotalStepsInt, decreasing = T)[1]
 ```
 
-```
-##      835 
-## 206.1698
-```
+The maximum number of steps is `maxsteps` in the `row.name(maxsteps)` interval.
+
 
 ## Imputing missing values
 1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with 𝙽𝙰s)
+
 
 ```r
 total.na <- sum(is.na(activity))
 ```
 
+The total number of missing values in the dataset is `total.na`.
+
+
 2. Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
+
 
 ```r
 activity1 <- activity
+##replacing the missing values in the new dataset with the mean of steps for each interval
 activity1$steps <- replace(activity1$steps, is.na(activity1$steps), tapply(activity1$steps, INDEX=activity1$interval, FUN=mean, na.rm=T))
 
+##calculanting the new total of steps per day for the new dataset
 TotalStepsDay1 <-  tapply(activity1$steps, INDEX=activity1$date, FUN=sum, na.rm=T) 
 hist(TotalStepsDay1)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+
+The median and mean total number of steps taken per day in the new dataset are:
 
 ```r
 xt1 <- xtable(data.frame(Mean=mean(TotalStepsDay1), Median=median(TotalStepsDay1)))
@@ -86,7 +98,7 @@ print(xt1, type="html")
 
 ```
 ## <!-- html table generated in R 3.4.3 by xtable 1.8-2 package -->
-## <!-- Thu Apr 12 22:49:44 2018 -->
+## <!-- Fri Apr 13 09:50:29 2018 -->
 ## <table border=1>
 ## <tr> <th>  </th> <th> Mean </th> <th> Median </th>  </tr>
 ##   <tr> <td align="right"> 1 </td> <td align="right"> 10766.19 </td> <td align="right"> 10766.19 </td> </tr>
@@ -108,4 +120,4 @@ newdata <- aggregate(steps ~ interval + weekend, data=activity, FUN = "mean", na
 xyplot(steps ~ interval | weekend, data=newdata, type="l", layour=c(1,2))
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
